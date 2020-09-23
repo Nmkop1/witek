@@ -5,13 +5,19 @@ import Button from "../components/Button/Button"
 import Image from "gatsby-image"
 
 const ContentWrapper = styled.div`
-  width: 60%;
-  height: calc(100vh - 80px);
+  width: 100%;
+  height: calc(100vh - 20px);
+  display: flex;
+`
+const TextWrapper = styled.div`
+  width: 50%;
+  height: 100%;
   text-align: right;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
+  padding-right: 2%;
 
   h1 {
     font-size: 105px;
@@ -27,24 +33,27 @@ const ContentWrapper = styled.div`
 `
 
 const ImageWrapper = styled(Image)`
-  position: absolute !important;
-  top: 0;
-  right: 0;
-  width: 40%;
-  height: 100vh;
+  width: 50%;
+  height: 100%;
   object-fit: cover;
 `
 export default function Home({ data }) {
   return (
     <>
       <ContentWrapper>
-        <h1>Hello START</h1>
-        <p>
-          While artists work from real to the abstract, architects must work
-          from the abstract to the real.
-        </p>
-        <Button>estimate project</Button>
-        <ImageWrapper fluid={data.file.childImageSharp.fluid} />
+        <TextWrapper>
+          <h1>Hello START</h1>
+          <p>
+            While artists work from real to the abstract, architects must work
+            from the abstract to the real.
+          </p>
+          <Button>estimate project</Button>
+        </TextWrapper>
+
+        <ImageWrapper
+          fluid={data.file.childImageSharp.fluid}
+          imgStyle={{ objectFit: "contain" }}
+        />
       </ContentWrapper>
     </>
   )
@@ -53,7 +62,7 @@ export default function Home({ data }) {
 
 export const query = graphql`
   {
-    file(name: { eq: "pink" }) {
+    file(name: { eq: "foto1" }) {
       childImageSharp {
         fluid(maxWidth: 800, jpegQuality: 100) {
           ...GatsbyImageSharpFluid_noBase64

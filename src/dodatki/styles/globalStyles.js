@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     margin: 0;
-    padding: 80px 65px 0;
+    padding-top:  0 ;
     font-family: 'Lato';
   }
   button {

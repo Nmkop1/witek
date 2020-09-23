@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import AniLink from "gatsby-plugin-transition-link/AniLink"
 const NavigationWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -16,7 +17,7 @@ const Logo = styled.span`
   margin-right: 10px;
   a {
     text-decoration: none;
-    color: inherit;
+    color: #6ec21a;
   }
 `
 const NavigationUl = styled.ul`
@@ -32,7 +33,7 @@ const NavigationLi = styled.li`
     color: inherit;
   }
   :hover {
-    color: red;
+    color: green;
   }
 `
 const Navigation = () => (
@@ -42,13 +43,19 @@ const Navigation = () => (
     </Logo>
     <NavigationUl>
       <NavigationLi>
-        <Link to="/jeden">jeden</Link>
+        <AniLink fade to="/jeden">
+          jeden
+        </AniLink>
       </NavigationLi>
       <NavigationLi>
-        <Link to="/dwa">dwa</Link>
+        <AniLink fade to="/dwa">
+          dwa
+        </AniLink>
       </NavigationLi>
       <NavigationLi>
-        <Link to="/trzy">trzy</Link>
+        <AniLink fade to="/trzy">
+          trzy
+        </AniLink>
       </NavigationLi>
       <NavigationLi>
         <Link to="/cztery">cztery</Link>
