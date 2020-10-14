@@ -1,74 +1,52 @@
 import React from "react"
+import { graphql, StaticQuery } from "gatsby"
 import styled from "styled-components"
-import { graphql } from "gatsby"
-import Button from "../components/Button/Button"
-import Image from "gatsby-image"
+import Wrapper from "../components/Wrapper"
+import BackgroundImage from "gatsby-background-image"
 
-const ContentWrapper = styled.div`
-  width: 100%;
-  height: calc(100vh - 20px);
-  display: flex;
-`
-const TextWrapper = styled.div`
-  width: 50%;
-  height: 100%;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  padding-right: 2%;
-
-  h1 {
-    font-size: 105px;
-    margin: 0;
-    width: 60%;
-    line-height: 0.9;
-  }
-
-  p {
-    margin: 60px 0 40px;
-    width: 40%;
-  }
-`
-
-const ImageWrapper = styled(Image)`
-  width: 50%;
-  height: 100%;
-  object-fit: cover;
-`
-export default function Home({ data }) {
-  return (
-    <>
-      <ContentWrapper>
-        <TextWrapper>
-          <h1>Hello DWA</h1>
-          <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of
-          </p>
-          <Button>estimate project</Button>
-        </TextWrapper>
-
-        <ImageWrapper
-          fluid={data.file.childImageSharp.fluid}
-          imgStyle={{ objectFit: "contain" }}
-        />
-      </ContentWrapper>
-    </>
-  )
-}
-// gatsby develop
-
-export const query = graphql`
-  {
-    file(name: { eq: "foto3" }) {
-      childImageSharp {
-        fluid(maxWidth: 800, jpegQuality: 100) {
-          ...GatsbyImageSharpFluid_noBase64
-          # ...GatsbyImageSharpFluid_tracedSVG
+const BackgroundSection = ({ className }) => (
+  <StaticQuery
+    query={graphql`
+      query {
+        desktop: file(relativePath: { eq: "pomidory.jpg" }) {
+          childImageSharp {
+            fluid(quality: 90, maxWidth: 1920) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
         }
       }
-    }
-  }
+    `}
+    render={data => {
+      // Set ImageData.
+      const imageData = data.desktop.childImageSharp.fluid
+      return (
+        <BackgroundImage
+          Tag="section"
+          className={className}
+          fluid={imageData}
+          backgroundColor={`#040e18`}
+        >
+          <Wrapper
+            h1={"Halo"}
+            span={"START"}
+            p={
+              "While artists work from real to the abstract, architects must work from the abstract to the real"
+            }
+          />
+        </BackgroundImage>
+      )
+    }}
+  />
+)
+
+const StyledBackgroundSection = styled(BackgroundSection)`
+  width: 100%;
+  height: calc(100vh - 8vh);
+  display: flex;
+  background-position: bottom center;
+  /* background-repeat: repeat-y; */
+  background-size: cover;
 `
+
+export default StyledBackgroundSection

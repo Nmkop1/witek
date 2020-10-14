@@ -1,74 +1,68 @@
+import { graphql, useStaticQuery } from "gatsby"
 import React from "react"
 import styled from "styled-components"
-import { graphql } from "gatsby"
-import Button from "../components/Button/Button"
-import Image from "gatsby-image"
+import Wrapper from "../components/Wrapper"
+import BackgroundImage from "gatsby-background-image"
 
-const ContentWrapper = styled.div`
-  width: 100%;
-  height: calc(100vh - 20px);
-  display: flex;
-`
-const TextWrapper = styled.div`
-  width: 50%;
-  height: 100%;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  padding-right: 2%;
+const MultiBackground = ({ className }) => {
+  const { pierwszeTlo, drugieTlo } = useStaticQuery(
+    graphql`
+      query {
+        pierwszeTlo: file(relativePath: { eq: "zboze.jpg" }) {
+          childImageSharp {
+            fluid(quality: 100) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+        # drugieTlo: file(relativePath: { eq: "pomidory.jpg" }) {
+        #   childImageSharp {
+        #     fluid(quality: 100, maxWidth: 420) {
+        #       ...GatsbyImageSharpFluid_withWebp
+        #     }
+        #   }
+        # }
+      }
+    `
+  )
 
-  h1 {
-    font-size: 105px;
-    margin: 0;
-    width: 60%;
-    line-height: 0.9;
-  }
+  // Watch out for CSS's stacking order, especially when styling the individual
+  // positions! The lowermost image comes last!
+  const backgroundFluidImageStack = [
+    pierwszeTlo.childImageSharp.fluid,
+    `linear-gradient(rgba(120, 150, 150, 0.73), rgba(4, 243, 67, 0.73))`,
+    // drugieTlo.childImageSharp.fluid,
+  ].reverse()
 
-  p {
-    margin: 60px 0 40px;
-    width: 40%;
-  }
-`
-
-const ImageWrapper = styled(Image)`
-  width: 50%;
-  height: 100%;
-`
-export default function Home({ data }) {
   return (
-    <>
-      <ContentWrapper>
-        <TextWrapper>
-          <h1>Hello TRZY</h1>
-          <p>
-            While artists work from real to the abstract, architects must work
-            from the abstract to the real.
-          </p>
-          <Button>estimate project</Button>
-        </TextWrapper>
-
-        <ImageWrapper
-          fluid={data.file.childImageSharp.fluid}
-          imgStyle={{ objectFit: "contain" }}
-        />
-      </ContentWrapper>
-    </>
+    <BackgroundImage
+      Tag={`section`}
+      id={`test`}
+      className={className}
+      fluid={backgroundFluidImageStack}
+    >
+      <Wrapper
+        h1={"Halo"}
+        span={"START"}
+        p={
+          "While artists work from real to the abstract, architects must work from the abstract to the real"
+        }
+      />
+    </BackgroundImage>
   )
 }
-// gatsby develop
 
-export const query = graphql`
-  {
-    file(name: { eq: "foto4" }) {
-      childImageSharp {
-        fluid(maxWidth: 1200, jpegQuality: 100) {
-          ...GatsbyImageSharpFluid_noBase64
-          # ...GatsbyImageSharpFluid_tracedSVG
-          ...GatsbyImageSharpFluidLimitPresentationSize
-        }
-      }
-    }
-  }
+const StyledMultiBackground = styled(MultiBackground)`
+  width: 100%;
+  display: flex;
+  height: calc(100vh - 8vh);
+  /* You should set a background-size as the default value is "cover"! */
+  background-size: cover;
+  /* So we won't have the default "lightgray" background-color. */
+  background-color: transparent;
+  /* Now again, remember the stacking order of CSS: lowermost comes last! */
+  /* background-repeat: no-repeat, no-repeat, repeat; */
+  background-position: center 155%, center, center;
 `
+
+export default StyledMultiBackground

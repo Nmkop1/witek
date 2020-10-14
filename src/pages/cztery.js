@@ -1,63 +1,45 @@
 import React from "react"
-import styled from "styled-components"
 import { graphql } from "gatsby"
-import Button from "../components/Button/Button"
-import Image from "gatsby-image"
+import Wrapper from "../components/Wrapper"
+import styled from "styled-components"
 
-const ContentWrapper = styled.div`
+const Wrap = styled.div`
   width: 100%;
-  height: calc(100vh - 20px);
-  display: flex;
-`
-const TextWrapper = styled.div`
-  width: 50%;
-  height: 100%;
-  text-align: right;
+  height: calc(3 * 100vh);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  padding-right: 2%;
-
-  h1 {
-    font-size: 105px;
-    margin: 0;
-    width: 60%;
-    line-height: 0.9;
-  }
-
-  p {
-    margin: 60px 0 40px;
-    width: 40%;
-  }
+  align-items: center;
 `
-
-const ImageWrapper = styled(Image)`
-  width: 50%;
-  height: 100%;
+const Anim = styled.div`
+  width: 500px;
+  height: 500px;
+  background-color: red;
+  margin-bottom: 20vh;
 `
 export default function Home({ data }) {
   return (
-    <>
-      <ContentWrapper>
-        <TextWrapper>
-          <h1>Hello CZTERY</h1>
-          <p>
-            While artists work from real to the abstract, architects must work
-            from the abstract to the real.
-          </p>
-          <Button>estimate project</Button>
-        </TextWrapper>
-
-        <ImageWrapper
-          fluid={data.file.childImageSharp.fluid}
-          imgStyle={{ objectFit: "contain" }}
-        />
-      </ContentWrapper>
-    </>
+    <Wrap>
+      <Anim data-sal="fade" data-sal-delay="500" data-sal-easing="ease"></Anim>
+      <Anim
+        data-sal="slide-left"
+        data-sal-delay="500"
+        data-sal-duration="500"
+        data-sal-easing="Easy-out-back"
+      ></Anim>
+      <Anim
+        data-sal="flip-down"
+        data-sal-delay="500"
+        data-sal-easing="ease"
+      ></Anim>
+      <Anim
+        data-sal="zoom-in"
+        data-sal-duration="2000"
+        data-sal-delay="500"
+        data-sal-easing="ease-out-bounce"
+      ></Anim>
+    </Wrap>
   )
 }
-// gatsby develop
 
 export const query = graphql`
   {
